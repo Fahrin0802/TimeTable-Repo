@@ -11,3 +11,42 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App{
+  display:flex; 
+  flex-direction:row;
+}
+
+.wrapper{
+  display: inline-block;
+  padding: 15px;
+}
+
+.draggable {
+  background-color: black;
+  color: white;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.tableCourse{
+  /* background-color: black; */
+  color: black;
+  font-weight: 'bold';
+  font-size: 15px;
+
+  width: 100px;
+  height: 45px;
+}
+
+
+.drag-container{
+  padding-top: 10px;
+  border: 1px solid;
+  padding: 5px;
+  min-height: 50px;
+  height: auto;
+}

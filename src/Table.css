@@ -1,0 +1,14 @@
+th, td {
+    width: 100px;
+    height: 45px;
+    border: 0.2px solid black;
+    padding: 0px;
+}
+
+thead {
+  width: 25%;
+}
+
+table{
+  border-spacing: 0;
+}

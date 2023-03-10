@@ -24,7 +24,7 @@ class CoursePalette extends Component{
             return (
                 <div 
                     key={index} 
-                    onClick={""}
+                   
                     
                     onDragStart = {(event) => this.props.onDragStart(event, course)}
                     onDragEnd = {(event) => this.props.unhighlight(event)}

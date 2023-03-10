@@ -20,7 +20,7 @@ class Seminar extends Component{
     render() {
         const {paletteSeminars} = this.props
 
-        const seminars = paletteSeminars.map((seminar, index) => {
+        const seminars = this.props.paletteSeminars.map((seminar, index) => {
             return (
                 <div 
                     key={index} 

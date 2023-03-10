@@ -1,8 +1,32 @@
 th, td {
-    width: 100px;
+    /* width: 100px;
+    height: 45px;
+    border: 0.2px solid black;
+    padding: 0px; */
+    width: "relative";
+    min-width: 100px;
     height: 45px;
     border: 0.2px solid black;
     padding: 0px;
+}
+
+.tableCourse {
+  display:inline-block;
+  color: black;
+  
+  height: 100%;
+  min-width: 80px;
+
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+
+.courseOuterDiv {
+  flex: 0 1 auto;
+  width: inherit;
+  flex-grow: 1;
+  height: 100%;
 }
 
 thead {

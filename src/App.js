@@ -134,7 +134,7 @@ class App extends Component {
           {
             section: "EA2",
             color: "orange",
-            times: ["MON_12:00-01:00", "WED_12:00-01:00", "FRI_12:00-01:00",],
+            times: ["MON_12:00-16:00", "WED_12:00-16:00", "FRI_12:00-16:00",],
           },
         ]
       },
@@ -188,7 +188,7 @@ class App extends Component {
       {
           time: "08:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             '', '', '', '', '',
@@ -197,7 +197,7 @@ class App extends Component {
       {
           time: "09:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             "", "", "", "", "", "",
@@ -206,7 +206,7 @@ class App extends Component {
       {
           time: "10:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             "", "", "", "", "", "",
@@ -215,7 +215,7 @@ class App extends Component {
       {
           time: "11:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             "", "", "", "", "", "",
@@ -224,7 +224,7 @@ class App extends Component {
       {
           time: "12:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             "", "", "", "", "", "",
@@ -233,7 +233,7 @@ class App extends Component {
       {
           time: "13:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             "", "", "", "", "", "",
@@ -242,7 +242,7 @@ class App extends Component {
       {
           time: "14:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             "", "", "", "", "", "",
@@ -251,7 +251,7 @@ class App extends Component {
       {
           time: "15:00",
           day: [
-              "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             "", "", "", "", "", "",
@@ -260,16 +260,16 @@ class App extends Component {
       {
           time: "16:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
-            "", "", "", "", "", "",
+            "", "", "", "", "",
           ],
       },
       {
           time: "17:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             "", "", "", "", "", "",
@@ -278,7 +278,7 @@ class App extends Component {
       {
           time: "18:00",
           day: [
-            "", "", "", "", "",
+            [], [], [], [], [],
           ],
           color: [
             "", "", "", "", "", "",
@@ -289,20 +289,30 @@ class App extends Component {
 
   highlight = (course) => {
     const {tableCourses} = this.state
-
+    
+   
     const info = []
     course.options.map((option, index) => {
         const color = option.color
         console.log('color', color)
         const times = option.times
 
+        //item = "MON_12:00-14:00"
         times.map((item, index) => {
-            var day = item.split('_')[0]
-            var time = item.split('_')[1]
-            time = time.split('-')[0]
-            time = time.split(':')[0]
-            time = parseInt(time)
-            time = time - 8
+            var day = item.split('_')[0] //day = MON
+            var time = item.split('_')[1] //time = 12:00-14:00
+
+            var endTime = time.split('-')[1] //endTime = 14:00
+            endTime = endTime.split(':')[0] //endTime = 14
+            endTime = parseInt(endTime) //endTime = 14
+            endTime =(endTime - 8)  //endTime = 6
+
+
+            var startTime = time.split('-')[0] //startTime = 12:00
+            startTime = startTime.split(':')[0] //startTime = 12
+            startTime = parseInt(startTime) //startTime = 12
+            startTime = startTime - 8 //startTime = 4
+
 
             switch(day) {
               case 'MON':
@@ -323,15 +333,22 @@ class App extends Component {
               default:
                 day = 5;
             }
-            info.push([color, day, time])
+            for(var i = startTime; i < endTime; i++) {
+              info.push([color, day, i])
+            }
+            // info.push([color, day, startTime]) //info = [yellow,0,4]
+            // info.push([color, day, endTime]) //info = [yellow,0,6]
+
         })
 
     })
 
     // // To highlight a table cell, I need the color, the day, and the time
+    
     info.map((thing, index) => {
-      tableCourses[thing[2]].color[thing[1]] = thing[0];
+      tableCourses[thing[2]].color[thing[1]] = thing[0]; // tableCourses[4].color[0] = yellow
     })
+    
 
     this.setState({ tableCourses: tableCourses })
   }
@@ -399,13 +416,19 @@ class App extends Component {
     console.log("courseOption", courseOption)
 
     // Fill the table with that course 
+    //item = "MON_12:00-14:00"
     course.options[courseOption].times.map((item, slotIndex) => {
-        var tempDay = item.split('_')[0]
-        var tempTime = item.split('_')[1]
-        tempTime = tempTime.split('-')[0]
-        tempTime = tempTime.split(':')[0]
-        tempTime = parseInt(tempTime)
-        tempTime = tempTime - 8
+        var tempDay = item.split('_')[0] //tempDay = MON
+        var tempTime = item.split('_')[1] //tempTime = 12:00-14:00
+        var tempStartTime = tempTime.split('-')[0] //tempStartTime = 12:00
+        tempStartTime = tempStartTime.split(':')[0] //tempStartTime = 12
+        tempStartTime = parseInt(tempStartTime) //tempStartTime = 12
+        tempStartTime = tempStartTime - 8 //tempStartTime = 4
+
+        var tempEndTime = tempTime.split('-')[1] //tempEndTime = 14:00
+        tempEndTime = tempEndTime.split(':')[0] //tempEndTime = 14
+        tempEndTime = parseInt(tempEndTime) //tempEndTime = 14
+        tempEndTime = tempEndTime - 8 //tempEndTime = 6
 
         switch(tempDay) {
           case 'MON':
@@ -427,8 +450,11 @@ class App extends Component {
             tempDay = 5;
         }
 
-        tableCourses[tempTime].day[tempDay] = course
+        for(var i = tempStartTime; i < tempEndTime; i++) {
+          tableCourses[i].day[tempDay].push(course) //tableCourses[4].day[0].push(course)
+        }
 
+        
     })
     this.setState({ tableCourses: tableCourses })
     
@@ -446,36 +472,41 @@ class App extends Component {
     const newList = paletteCourses.filter((item) => item.name !== course.name);
     console.log("kikos", course.name)
     this.setState({ paletteCourses: newList })
+  }
 
+  deleteSemFromPalette = (course) => {
+    const {paletteSeminars} = this.state
+    const newList = paletteSeminars.filter((item) => item.name !== course.name);
+    console.log("kikos", course.name)
+    this.setState({paletteSeminars: newList })
+  }
+
+  deleteLabFromPalette = (course) => {
+    const {paletteLab} = this.state
+    const newList = paletteLab.filter((item) => item.name !== course.name);
+    console.log("kikos", course.name)
+    this.setState({paletteLab: newList })
   }
 
   empty = (course) => {
     const {tableCourses} = this.state
     tableCourses.map((slot, index) => {
-      if(slot.day[0]!==""){
-        if(slot.day[0].name ===course.name){
-          tableCourses[index].day[0] = ""
-        }
+      if(slot.day[0].length!== 0){
+        tableCourses[index].day[0] = tableCourses[index].day[0].filter((item) => item.name !== course.name)
       }
-      if(slot.day[1]!==""){
-        if(slot.day[1].name ===course.name){
-          tableCourses[index].day[1] = ""
-        }
+
+      if(slot.day[1].length!== 0){
+        tableCourses[index].day[1] = tableCourses[index].day[1].filter((item) => item.name !== course.name)
       }
-      if(slot.day[2]!==""){
-        if(slot.day[2].name ===course.name){
-          tableCourses[index].day[2] = ""
-        }
+
+      if(slot.day[2].length!== 0){
+        tableCourses[index].day[2] = tableCourses[index].day[2].filter((item) => item.name !== course.name)
       }
-      if(slot.day[3]!==""){
-        if(slot.day[3].name ===course.name){
-          tableCourses[index].day[3] = ""
-        }
+      if(slot.day[3].length!== 0){
+        tableCourses[index].day[3] = tableCourses[index].day[3].filter((item) => item.name !== course.name)
       }
-      if(slot.day[4]!==""){
-        if(slot.day[4].name ===course.name){
-          tableCourses[index].day[4] = ""
-        }
+      if(slot.day[4].length!== 0){
+        tableCourses[index].day[4] = tableCourses[index].day[4].filter((item) => item.name !== course.name)
       }
       
     })
@@ -507,8 +538,6 @@ class App extends Component {
     event.preventDefault()
   }
 
-  
-
   render() {
     const {paletteCourses} = this.state;
     const {courseList} = this.state;
@@ -521,9 +550,9 @@ class App extends Component {
     return (
       <div className="App">
         <CoursePalette courseList={courseList} paletteCourses={paletteCourses} onDragStart={this.onDragStart} unhighlight={this.unhighlight}/>
-        <Table weekdays ={weekdays} tableCourses={tableCourses} addCourse={this.addCourseToTable} deleteCourseFromPalette={this.deleteCourseFromPalette} rightClickHandler={this.rightClickHandler}/>
-        <Seminar paletteSeminars={paletteSeminars} onDragStart={this.onDragStart} unhighlight={this.unhighlight}/>
-        <Lab paletteLab={paletteLab} onDragStart={this.onDragStart} unhighlight={this.unhighlight}/>
+        <Table weekdays ={weekdays} tableCourses={tableCourses} addCourse={this.addCourseToTable} deleteCourseFromPalette={this.deleteCourseFromPalette} deleteSemFromPalette={this.deleteSemFromPalette} deleteLabFromPalette={this.deleteLabFromPalette} rightClickHandler={this.rightClickHandler}/>
+        <Seminar paletteSeminars={paletteSeminars} onDragStart={this.onDragStart} unhighlight={this.unhighlight} />
+        <Lab paletteLab={paletteLab} onDragStart={this.onDragStart} unhighlight={this.unhighlight} />
       </div>
     )
   }

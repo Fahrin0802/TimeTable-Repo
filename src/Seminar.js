@@ -41,7 +41,7 @@ class Seminar extends Component{
 
         return (
             <p>
-                <div className="drag-container">
+                <div className="seminar-container">
                     <h4> Seminars </h4>
                     {seminars}
                 </div>

@@ -47,6 +47,22 @@ code {
   padding-top: 10px;
   border: 1px solid;
   padding: 5px;
-  min-height: 50px;
+  min-height: 400px;
+  height: auto;
+}
+
+.lab-container{
+  padding-top: 10px;
+  border: 1px solid;
+  padding: 5px;
+  min-height: 200px;
+  height: auto;
+}
+
+.seminar-container{
+  padding-top: 10px;
+  border: 1px solid;
+  padding: 5px;
+  min-height: 200px;
   height: auto;
 }

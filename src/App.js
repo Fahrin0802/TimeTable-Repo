@@ -4,10 +4,14 @@ import Table from './Table';
 import CoursePalette from './CoursePalette';
 import Seminar from './Seminar'
 import Lab from './Lab'
+import OptionDashBoard from './OptionDashBoard'
+
+
+
 
 
 class App extends Component {
-//comment
+
   state = {
     courseList: [
       {
@@ -54,13 +58,43 @@ class App extends Component {
       },
     ],
 
+
+
+
+
+    sectionDashboard: [
+      {   
+        name: "ECE325",
+          Section: "E1",
+          Times: "Monday 09:00-10:00, Friday 09:00-10:00",
+          Room: "ETLC-300",
+          Professor: "JK Rowling",
+
+      },
+
+      {
+        name: "ECE325",
+        Section: "E2",
+        Times: "Monday 09:00-10:00, Wednesday 09:00-10:00",
+        Room: "ETLC-350",
+        Professor: "JK Rowling",
+      },
+
+    ],
+
+
+
+
+
+
+
     paletteCourses: [
       {
         name: "ECE 325",
         options: [
           {
             section: "EB1",
-            color: "yellow",
+            color: "orange",
             times: ["MON_09:00-10:00", "WED_09:00-10:00", "FRI_09:00-10:00"],
           },
           {
@@ -102,7 +136,7 @@ class App extends Component {
           {
             section: "EA1",
             color: "purple",
-            times: ["TUE_17:00-18:00",],
+            times: ["TUE_18:00-19:00",],
           },
         ]
       },
@@ -112,12 +146,12 @@ class App extends Component {
         options: [
           {
             section: "EA1",
-            color: "orange",
-            times: ["TUE_15:00-16:00", "THU_15:00-16:00"],
+            color: "pink",
+            times: ["TUE_14:00-15:00", "THU_14:00-15:00"],
           },
           {
             section: "EA2",
-            color: "green",
+            color: "red",
             times: ["MON_15:00-16:00", "WED_15:00-16:00", "FRI_15:00-16:00",],
           },
         ]
@@ -134,7 +168,7 @@ class App extends Component {
           {
             section: "EA2",
             color: "orange",
-            times: ["MON_12:00-16:00", "WED_12:00-16:00", "FRI_12:00-16:00",],
+            times: ["MON_13:00-14:00", "WED_13:00-14:00", "FRI_13:00-14:00",],
           },
         ]
       },
@@ -146,7 +180,7 @@ class App extends Component {
         options: [
           {
             section: "EB1",
-            color: "yellow",
+            color: "violet",
             times: ["MON_09:00-10:00"],
           },
           {
@@ -165,7 +199,7 @@ class App extends Component {
           {
             section: "EB1",
             color: "yellow",
-            times: ["TUE_15:00-16:00"],
+            times: ["TUE_15:00-18:00"],
           },
     
         ]
@@ -176,7 +210,7 @@ class App extends Component {
           {
             section: "EB1",
             color: "yellow",
-            times: ["THU_15:00-16:00"],
+            times: ["THU_15:00-18:00"],
           },
     
         ]
@@ -366,6 +400,10 @@ class App extends Component {
 
   onDragStart = (event, course) => {
     this.highlight(course)
+    // <div>
+    //   classname ="fahrin"
+      
+    // </div>
 
     console.log('dragstart on div: ', course.name);
     event.dataTransfer.setData("course", JSON.stringify(course));
@@ -547,12 +585,19 @@ class App extends Component {
     const {paletteLab} = this.state;
 
 
+
     return (
       <div className="App">
         <CoursePalette courseList={courseList} paletteCourses={paletteCourses} onDragStart={this.onDragStart} unhighlight={this.unhighlight}/>
+        <div>
+          <Seminar paletteSeminars={paletteSeminars} onDragStart={this.onDragStart} unhighlight={this.unhighlight} />
+          <Lab paletteLab={paletteLab} onDragStart={this.onDragStart} unhighlight={this.unhighlight} />
+        </div>
         <Table weekdays ={weekdays} tableCourses={tableCourses} addCourse={this.addCourseToTable} deleteCourseFromPalette={this.deleteCourseFromPalette} deleteSemFromPalette={this.deleteSemFromPalette} deleteLabFromPalette={this.deleteLabFromPalette} rightClickHandler={this.rightClickHandler}/>
-        <Seminar paletteSeminars={paletteSeminars} onDragStart={this.onDragStart} unhighlight={this.unhighlight} />
-        <Lab paletteLab={paletteLab} onDragStart={this.onDragStart} unhighlight={this.unhighlight} />
+        
+        <div>
+          <OptionDashBoard sectionDashboard={this.state.sectionDashboard}/>
+        </div>
       </div>
     )
   }

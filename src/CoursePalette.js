@@ -26,7 +26,8 @@ class CoursePalette extends Component{
                     key={index} 
                    
                     
-                    onDragStart = {(event) => this.props.onDragStart(event, course)}
+                    onDragStart = {(event) => 
+                        this.props.onDragStart(event, course)}
                     onDragEnd = {(event) => this.props.unhighlight(event)}
                     style={{ backgroundColor: course.color}}
 

@@ -25,7 +25,7 @@ const CourseList =(props) => {
   const coursef = props.dayCourse.map((course, courseIndex) => {
     if (timeIndex !== 0){
       var matchFound = false
-      const fahrin = tableCourses[timeIndex -1].day[dayIndex].map((item) => {
+      const elementCheck = tableCourses[timeIndex -1].day[dayIndex].map((item) => {
         if(course.name === item.name) {
           matchFound = true
         }
@@ -88,7 +88,8 @@ const RowCells =(props) => {
           return (
 
             <td style={{ backgroundColor: props.color[dayIndex]}} 
-                onDragOver={(event) => {event.preventDefault()}} 
+                onDragOver={(event) => {
+                  event.preventDefault()}} 
 
                 onDrop={(event) => {
                   let course = JSON.parse(event.dataTransfer.getData("course"));

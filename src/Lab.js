@@ -41,7 +41,7 @@ class Lab extends Component{
 
         return (
             <p>
-                <div className="drag-container">
+                <div className="lab-container">
                     <h4> Labs </h4>
                     {labs}
                 </div>
